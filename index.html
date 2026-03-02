@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grace Cafe — Bushnell, FL</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #ffffff;
+      --off-white: #f5f5f7;
+      --cream:   #faf9f6;
+      --black:   #1d1d1f;
+      --gray:    #6e6e73;
+      --light-gray: #d2d2d7;
+      --accent:  #c8933a;          /* warm coffee gold */
+      --accent-light: #f5e9d4;
+      --radius:  18px;
+      --font: -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--black);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── HERO / MAP ─── */
+    #location {
+      padding-top: 52px;         /* nav height */
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .map-overlay {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: saturate(180%) blur(24px);
+      -webkit-backdrop-filter: saturate(180%) blur(24px);
+      border-radius: 20px;
+      padding: 20px 32px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      min-width: 280px;
+    }
+
+    .map-overlay h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .map-overlay p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .map-overlay .pill {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+
+    .map-overlay .pill:hover { opacity: .85; }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 96px 24px; }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.08;
+      color: var(--black);
+      margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--gray);
+      line-height: 1.65;
+      max-width: 580px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--off-white); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 56px;
+    }
+
+    .about-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+
+    .about-card .icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .about-card h3 {
+      font-size: 20px;
+      font-weight: 650;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+
+    .about-card p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ─── MENU ─── */
+    #menu { background: var(--white); }
+
+    .menu-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 36px 0 48px;
+    }
+
+    .tab-btn {
+      background: var(--off-white);
+      border: none;
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--gray);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .menu-card {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.09);
+    }
+
+    .menu-card .emoji { font-size: 28px; margin-bottom: 14px; }
+
+    .menu-card h3 {
+      font-size: 17px;
+      font-weight: 650;
+      letter-spacing: -0.2px;
+      margin-bottom: 6px;
+    }
+
+    .menu-card p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+
+    .menu-card .price {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .category-section { display: none; }
+    .category-section.active { display: contents; }
+
+    /* ─── HOURS ─── */
+    #hours { background: var(--off-white); }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .hours-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+
+    .hours-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--off-white);
+      font-size: 15px;
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    .hours-row .day { color: var(--gray); }
+
+    .hours-row .time {
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    .hours-row .closed { color: var(--light-gray); }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--off-white);
+      font-size: 15px;
+    }
+
+    .contact-item:last-child { border-bottom: none; }
+
+    .contact-item .contact-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .contact-item a {
+      color: var(--black);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    .contact-item a:hover { color: var(--accent); }
+
+    /* ─── ORDER BANNER ─── */
+    #order {
+      background: var(--black);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    #order .section-eyebrow { color: var(--accent); }
+
+    #order .section-title { color: var(--white); margin: 0 auto 24px; }
+
+    #order .section-subtitle { color: rgba(255,255,255,0.55); margin: 0 auto 36px; }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+
+    .cta-btn:hover { opacity: .88; transform: scale(1.02); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--off-white);
+      border-top: 1px solid var(--light-gray);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      .about-grid, .hours-grid { grid-template-columns: 1fr; gap: 20px; }
+      .nav-links { display: none; }
+      .map-overlay { width: calc(100% - 40px); padding: 16px 20px; }
+      .section-title { letter-spacing: -0.8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─────────────── NAV ─────────────── -->
+<nav>
+  <a class="nav-logo" href="#">Grace Cafe</a>
+  <ul class="nav-links">
+    <li><a href="#location">Location</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="https://www.gracecafe.co" target="_blank">Order Online</a></li>
+  </ul>
+</nav>
+
+<!-- ─────────────── LOCATION (first thing visible) ─────────────── -->
+<section id="location" style="padding:0;">
+  <div class="map-wrapper">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3479.123456789!2d-82.00610!3d28.66200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e859f00000001%3A0x1!2s407%20N%20West%20St%2C%20Bushnell%2C%20FL%2033513!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Grace Cafe on Google Maps">
+    </iframe>
+
+    <div class="map-overlay">
+      <h1>Grace Cafe</h1>
+      <p>407 N. West St., Bushnell, FL 33513<br>(352) 603-2833</p>
+      <a
+        class="pill"
+        href="https://maps.google.com/?q=407+N+West+St,+Bushnell,+FL+33513"
+        target="_blank">
+        Get Directions
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── ABOUT ─────────────── -->
+<section id="about">
+  <div class="container">
+    <p class="section-eyebrow">Our Story</p>
+    <h2 class="section-title">Fresh energy.<br>Unique flavors.</h2>
+    <p class="section-subtitle">
+      Formerly Protein 407, Grace Cafe brings bold, handcrafted food to the heart of Bushnell.
+      We believe every bite should be intentional — made with quality ingredients and served with care.
+    </p>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="icon">🥪</div>
+        <h3>Crafted with Care</h3>
+        <p>From our Cuban sandwich made with bread from La Segunda Bakery — a Tampa legend since 1915 — to our Puerto Rican Tripleta, every item is built to impress.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">🌿</div>
+        <h3>Fresh & Intentional</h3>
+        <p>We only add items to our menu when we're confident they meet our standard of excellence. Quality over quantity, every single time.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">⚡️</div>
+        <h3>Energy to Go</h3>
+        <p>Power through your day with protein shakes, energy boosters, and specialty coffees crafted to fuel your morning and afternoon.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">🍓</div>
+        <h3>Healthy Options</h3>
+        <p>Our açaí bowls packed with fresh fruit and your choice of up to six drizzles prove that healthy eating never has to be boring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── MENU ─────────────── -->
+<section id="menu">
+  <div class="container">
+    <p class="section-eyebrow">What We Serve</p>
+    <h2 class="section-title">The Menu.</h2>
+    <p class="section-subtitle">
+      Handcrafted food and drinks made fresh daily. Order online for in-store pickup.
+    </p>
+
+    <!-- Tab buttons -->
+    <div class="menu-tabs">
+      <button class="tab-btn active" onclick="showCategory('sandwiches', this)">🥪 Sandwiches</button>
+      <button class="tab-btn" onclick="showCategory('wraps', this)">🌯 Wraps</button>
+      <button class="tab-btn" onclick="showCategory('healthy', this)">🥗 Healthy Picks</button>
+      <button class="tab-btn" onclick="showCategory('coffee', this)">☕ Coffees</button>
+      <button class="tab-btn" onclick="showCategory('shakes', this)">💪 Protein Shakes</button>
+      <button class="tab-btn" onclick="showCategory('energy', this)">⚡ Energy Boosters</button>
+      <button class="tab-btn" onclick="showCategory('drinks', this)">🥤 Drinks</button>
+      <button class="tab-btn" onclick="showCategory('treats', this)">🍪 Treats</button>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- SANDWICHES -->
+      <div class="category-section active" data-cat="sandwiches">
+        <div class="menu-card">
+          <div class="emoji">🥪</div>
+          <h3>Cuban Sandwich</h3>
+          <p>Authentic Cuban sandwich on bread from La Segunda Bakery — a Tampa legend since 1915. Pressed to perfection.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+        <div class="menu-card">
+          <div class="emoji">🥙</div>
+          <h3>Tripleta</h3>
+          <p>A Puerto Rican classic — ham, pork & chicken on toasted Cuban bread topped with potato sticks, lettuce, cheddar, mayo & ketchup.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- WRAPS -->
+      <div class="category-section" data-cat="wraps">
+        <div class="menu-card">
+          <div class="emoji">🌯</div>
+          <h3>Fresh Wraps</h3>
+          <p>Packed with fresh ingredients and bold flavors, our wraps are a satisfying option for any time of day.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- HEALTHY -->
+      <div class="category-section" data-cat="healthy">
+        <div class="menu-card">
+          <div class="emoji">🍓</div>
+          <h3>Açaí Bowl</h3>
+          <p>Loaded with fresh strawberries, banana, kiwi, or pineapple — topped with your choice of up to 6 drizzles.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+        <div class="menu-card">
+          <div class="emoji">🥗</div>
+          <h3>Healthy Picks</h3>
+          <p>Light, nutritious options crafted to keep you energized without compromising on taste.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- COFFEE -->
+      <div class="category-section" data-cat="coffee">
+        <div class="menu-card">
+          <div class="emoji">☕</div>
+          <h3>Specialty Coffees</h3>
+          <p>Expertly brewed hot and cold coffee drinks to start your morning right.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- SHAKES -->
+      <div class="category-section" data-cat="shakes">
+        <div class="menu-card">
+          <div class="emoji">💪</div>
+          <h3>Protein Shakes</h3>
+          <p>High-protein blends to fuel your workout and keep you going all day long.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- ENERGY -->
+      <div class="category-section" data-cat="energy">
+        <div class="menu-card">
+          <div class="emoji">⚡</div>
+          <h3>Energy Boosters</h3>
+          <p>Give your afternoon the jump it needs with our handcrafted energy drinks and boosters.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- DRINKS -->
+      <div class="category-section" data-cat="drinks">
+        <div class="menu-card">
+          <div class="emoji">🥤</div>
+          <h3>Drinks</h3>
+          <p>A refreshing selection of beverages to complement any meal or quench any thirst.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+      <!-- TREATS -->
+      <div class="category-section" data-cat="treats">
+        <div class="menu-card">
+          <div class="emoji">🍪</div>
+          <h3>Treats</h3>
+          <p>A little something sweet to finish off your visit or brighten your day.</p>
+          <span class="price">See menu for pricing</span>
+        </div>
+      </div>
+
+    </div><!-- /menu-grid -->
+  </div>
+</section>
+
+<!-- ─────────────── HOURS & CONTACT ─────────────── -->
+<section id="hours">
+  <div class="container">
+    <p class="section-eyebrow">Visit Us</p>
+    <h2 class="section-title">Hours &amp; Contact.</h2>
+
+    <div class="hours-grid">
+      <!-- Hours -->
+      <div class="hours-card">
+        <h3>Hours</h3>
+        <div class="hours-row"><span class="day">Monday</span><span class="time closed">Closed</span></div>
+        <div class="hours-row"><span class="day">Tuesday</span><span class="time">8:00 AM – 3:00 PM</span></div>
+        <div class="hours-row"><span class="day">Wednesday</span><span class="time">8:00 AM – 3:00 PM</span></div>
+        <div class="hours-row"><span class="day">Thursday</span><span class="time">8:00 AM – 3:00 PM</span></div>
+        <div class="hours-row"><span class="day">Friday</span><span class="time">8:00 AM – 3:00 PM</span></div>
+        <div class="hours-row"><span class="day">Saturday</span><span class="time">8:00 AM – 3:00 PM</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="time closed">Closed</span></div>
+      </div>
+
+      <!-- Contact -->
+      <div class="hours-card">
+        <h3>Contact</h3>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <a href="https://maps.google.com/?q=407+N+West+St,+Bushnell,+FL+33513" target="_blank">
+              407 N. West St.<br>Bushnell, FL 33513
+            </a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><a href="tel:+13526032833">(352) 603-2833</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🌐</div>
+          <div><a href="https://www.gracecafe.co" target="_blank">gracecafe.co</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💳</div>
+          <div style="color:var(--gray);font-size:14px;">Visa · Mastercard · Amex<br>Apple Pay · Google Pay · Cash</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── ORDER ONLINE ─────────────── -->
+<section id="order">
+  <div class="container" style="text-align:center;">
+    <p class="section-eyebrow">Skip the Wait</p>
+    <h2 class="section-title" style="color:var(--white);max-width:600px;margin:0 auto 20px;">Order online.<br>Pick up fresh.</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.55);margin:0 auto 36px;">
+      Place your order online for in-store pickup. No waiting, just great food ready when you are.
+    </p>
+    <a class="cta-btn" href="https://www.gracecafe.co" target="_blank">Order on gracecafe.co</a>
+  </div>
+</section>
+
+<!-- ─────────────── FOOTER ─────────────── -->
+<footer>
+  <p>
+    &copy; 2026 Grace Cafe &nbsp;·&nbsp; 407 N. West St., Bushnell, FL 33513 &nbsp;·&nbsp;
+    <a href="tel:+13526032833">(352) 603-2833</a>
+  </p>
+  <p style="margin-top:6px;">Tue – Sat &nbsp;8 AM – 3 PM</p>
+</footer>
+
+<!-- ─────────────── TAB LOGIC ─────────────── -->
+<script>
+  function showCategory(cat, btn) {
+    // Update buttons
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update cards
+    document.querySelectorAll('.category-section').forEach(s => {
+      s.classList.toggle('active', s.dataset.cat === cat);
+    });
+  }
+
+  // Smooth active-nav highlight
+  const sections = document.querySelectorAll('section[id], #location');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => {
+          l.style.color = l.getAttribute('href') === '#' + e.target.id
+            ? 'var(--accent)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
