@@ -69,68 +69,151 @@
 
     .nav-links a:hover { color: var(--accent); }
 
-    /* ─── HERO / MAP ─── */
+    /* ─── HERO ─── */
     #location {
-      padding-top: 52px;         /* nav height */
-      height: 100vh;
+      padding-top: 52px;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-    }
-
-    .map-wrapper {
-      flex: 1;
-      position: relative;
-    }
-
-    .map-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    .map-overlay {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: saturate(180%) blur(24px);
-      -webkit-backdrop-filter: saturate(180%) blur(24px);
-      border-radius: 20px;
-      padding: 20px 32px;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
-      min-width: 280px;
+      background:
+        radial-gradient(ellipse at 60% 0%,   #e8c98a 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 100%,  #c8933a44 0%, transparent 55%),
+        linear-gradient(160deg, #fdf6ec 0%, #f0dfc0 35%, #6b3d1e 100%);
+      position: relative;
+      overflow: hidden;
     }
 
-    .map-overlay h1 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 4px;
+    /* subtle grain texture */
+    #location::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      opacity: 0.5;
     }
 
-    .map-overlay p {
-      font-size: 14px;
-      color: var(--gray);
-      line-height: 1.5;
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 60px 24px;
     }
 
-    .map-overlay .pill {
+    .hero-eyebrow {
       display: inline-block;
-      margin-top: 12px;
-      background: var(--accent);
-      color: #fff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
-      padding: 8px 20px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6b3d1e;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 50px;
+      padding: 5px 16px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-title {
+      font-size: clamp(56px, 10vw, 100px);
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1;
+      color: #1d1208;
+      margin-bottom: 24px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #c8933a, #8b5a1a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-address {
+      font-size: 18px;
+      color: #4a2c10;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .hero-phone {
+      font-size: 16px;
+      color: #7a5230;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1d1208;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
       border-radius: 50px;
       text-decoration: none;
-      transition: opacity .2s;
+      transition: opacity .2s, transform .2s;
+      font-family: var(--font);
     }
 
-    .map-overlay .pill:hover { opacity: .85; }
+    .hero-btn-primary:hover { opacity: .85; transform: scale(1.02); }
+
+    .hero-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.55);
+      color: #1d1208;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.8);
+      backdrop-filter: blur(12px);
+      transition: opacity .2s, transform .2s;
+      font-family: var(--font);
+    }
+
+    .hero-btn-secondary:hover { opacity: .85; transform: scale(1.02); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: #7a5230;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+
+    .hero-scroll svg { width: 18px; opacity: 0.6; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
 
     /* ─── SECTIONS ─── */
     section { padding: 96px 24px; }
@@ -422,25 +505,28 @@
 
 <!-- ─────────────── LOCATION (first thing visible) ─────────────── -->
 <section id="location" style="padding:0;">
-  <div class="map-wrapper">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3479.123456789!2d-82.00610!3d28.66200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e859f00000001%3A0x1!2s407%20N%20West%20St%2C%20Bushnell%2C%20FL%2033513!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="Grace Cafe on Google Maps">
-    </iframe>
-
-    <div class="map-overlay">
-      <h1>Grace Cafe</h1>
-      <p>407 N. West St., Bushnell, FL 33513<br>(352) 603-2833</p>
-      <a
-        class="pill"
-        href="https://maps.google.com/?q=407+N+West+St,+Bushnell,+FL+33513"
-        target="_blank">
-        Get Directions
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bushnell, Florida</div>
+    <h1 class="hero-title">Grace<br><span>Cafe</span></h1>
+    <p class="hero-address">407 N. West St., Bushnell, FL 33513</p>
+    <p class="hero-phone">(352) 603-2833</p>
+    <div class="hero-actions">
+      <a class="hero-btn-primary"
+         href="https://maps.google.com/?q=407+N+West+St,+Bushnell,+FL+33513"
+         target="_blank">
+        📍 Get Directions
+      </a>
+      <a class="hero-btn-secondary" href="tel:+13526032833">
+        📞 Call Us
       </a>
     </div>
+  </div>
+
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    Scroll
   </div>
 </section>
 
